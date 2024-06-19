@@ -7,7 +7,6 @@ const title = "Pokémon Static | Home";
 const resp = await fetch("https://pokeapi.co/api/v2/pokemon");
 if (!resp.ok) throw new Error();
 const data = (await resp.json()) as PokemonListResponse;
-console.log(data);
 ---
 
 <MainLayout title={title}>
