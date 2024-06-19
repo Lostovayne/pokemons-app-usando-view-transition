@@ -11,12 +11,9 @@ console.log(data);
 ---
 
 <MainLayout title={title}>
-  <h1>Listado de Pokémons</h1>
-  <hr />
-
   <section
     aria-label="Listado de pokémons"
-    class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5"
+    class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 p-5"
     role="list"
   >
     {data.results.map(({ name, url }) => <PokemonCard name={name} url={url} />)}
