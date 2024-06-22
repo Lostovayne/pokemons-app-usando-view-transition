@@ -1,6 +1,8 @@
 ---
 import { ViewTransitions } from "astro:transitions";
 import { siteInfo } from "@/consts/sitr-info";
+import NavBar from "@/components/shared/NavBar.astro";
+
 export interface Props {
   title?: string;
   image?: string;
@@ -23,7 +25,7 @@ const {
 
     <!-- Seo -->
     <meta name="description" content={description} />
-    <meta name="author" content="Epsaind dev" >
+    <meta name="author" content="Epsaind dev" />
 
     <!-- OG Metatags -->
     <meta property="og:title" content={title} />
@@ -34,6 +36,7 @@ const {
     <ViewTransitions />
   </head>
   <body class="m-auto max-w-5xl bg-slate-800 text-slate-200">
+    <NavBar />
     <main>
       <slot />
     </main>
