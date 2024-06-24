@@ -1,24 +1,51 @@
+---
+const Links = [
+  { href: "/", name: "Listado" },
+  { href: "/pokemons/1", name: "Paginado" },
+  { href: "/favorites", name: "Favoritos" },
+];
+
+const { pathname } = Astro.url;
+---
+
 <!-- component -->
 <nav class="bg-white shadow dark:bg-gray-800">
   <div
     class="container flex items-center justify-center p-6 mx-auto text-gray-600 capitalize dark:text-gray-300"
   >
-    <a
-      href="/"
-      class="text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 mx-1.5 sm:mx-6"
-      >Listado</a
-    >
+    <!-- {
+      Links.map(({ href, name }) => (
+        <a
+          href={href}
+          class:list={[
+            "text-gray-800 dark:text-gray-200 mx-1.5 sm:mx-6",
+            { "border-b-2 border-blue-500": pathname === href },
+          ]}
+        >
+          {name}
+        </a>
+      ))
+    } -->
 
-    <a
-      href="/pokemons/1"
-      class="border-b-2 border-transparent hover:text-gray-800 dark:hover:text-gray-200 hover:border-blue-500 mx-1.5 sm:mx-6"
-      >Paginado</a
-    >
-
-    <a
-      href="/favorites"
-      class="border-b-2 border-transparent hover:text-gray-800 dark:hover:text-gray-200 hover:border-blue-500 mx-1.5 sm:mx-6"
-      >Favoritos</a
-    >
+    {
+      Links.map(({ href, name }) => (
+        <div class="mr-4">
+          <a
+            href={href}
+            class:list="text-gray-800 dark:text-gray-200 mx-1.5 md:mx-12"
+          >
+            {name}
+          </a>
+          {pathname === href ? (
+            <div
+              transition:name="menu-line"
+              class="border-b-2 border-blue-500 "
+            />
+          ) : (
+            <div class="border-b-2 border-transparent" />
+          )}
+        </div>
+      ))
+    }
   </div>
 </nav>
