@@ -39,20 +39,21 @@ const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
 >
   <section class="mt-10 mx-10 flex flex-col justify-center items-center">
     <div class="flex flex-row">
-      <!-- <a href="/">Regresar</a> -->
-      <button
-        class="text-white font-bold py-2 px-4 rounded"
-        onclick="history.back()"
-      >
-        Regresar</button
-      >
-      <Title>{name}</Title>
-    </div>
+      <div class="">
+        <button
+          class="text-white font-bold py-2 px-4 rounded"
+          onclick="history.back()"
+        >
+          Regresar</button
+        >
+        <Title>{name}</Title>
+      </div>
 
-    <button id="btn-favorite" >
-      <Icon name="outline" />
-      <Icon class:list={["text-red-500 hidden"]}  name="heart" />
-    </button>
+      <button id="btn-favorite" data-name={name} data-id={id}>
+        <Icon name="outline" size={30} class:list={["text-red-500"]} />
+        <Icon class:list={["text-red-500 hidden"]} name="heart" size={30} />
+      </button>
+    </div>
 
     <PokemonCard name={name} url={url} isBig />
     <audio controls class="mt-10">
@@ -62,13 +63,34 @@ const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
   </section>
 </MainLayout>
 
+<script>
+  interface FavoritePokemon {
+    name: string;
+    id: string;
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    const btnFavorite = document.querySelector(
+      "#btn-favorite"
+    ) as HTMLButtonElement;
+
+    if (!btnFavorite) return;
+
+    const name = btnFavorite.getAttribute("data-name");
+    const id = btnFavorite.getAttribute("data-id");
+
+    btnFavorite.addEventListener("click", () => {
+      console.log(name, id);
+    });
+  });
+</script>
+
 <style>
   a {
     @apply hover:underline text-blue-500;
   }
 
   #btn-favorite {
-    @apply hover:animate-pulse
+    @apply hover:animate-pulse;
   }
-
 </style>
