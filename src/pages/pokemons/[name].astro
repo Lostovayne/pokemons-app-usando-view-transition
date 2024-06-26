@@ -69,20 +69,21 @@ const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
     id: string;
   }
 
-  document.addEventListener("astro:page-load", () => {
+  const handlePageLoad = () => {
     const btnFavorite = document.querySelector(
       "#btn-favorite"
     ) as HTMLButtonElement;
 
     if (!btnFavorite) return;
-
     const name = btnFavorite.getAttribute("data-name");
     const id = btnFavorite.getAttribute("data-id");
 
     btnFavorite.addEventListener("click", () => {
       console.log(name, id);
     });
-  });
+  };
+
+  document.addEventListener("astro:page-load", handlePageLoad);
 </script>
 
 <style>
