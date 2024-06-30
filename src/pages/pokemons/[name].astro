@@ -49,9 +49,19 @@ const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
         <Title>{name}</Title>
       </div>
 
-      <button id="btn-favorite" data-name={name} data-id={id}>
-        <Icon name="outline" size={30} class:list={["text-red-500"]} />
-        <Icon class:list={["text-red-500 hidden"]} name="heart" size={30} />
+      <button id="btn-favorite" data-name={name} data-id={id}  >
+        <Icon
+          data-outline
+          name="outline"
+          size={30}
+          class:list={["text-red-500"]}
+        />
+        <Icon
+          data-full
+          class:list={["text-red-500 hidden"]}
+          name="heart"
+          size={30}
+        />
       </button>
     </div>
 
@@ -66,20 +76,57 @@ const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
 <script>
   interface FavoritePokemon {
     name: string;
-    id: string;
+    id: number;
   }
 
   const handlePageLoad = () => {
-    const btnFavorite = document.querySelector(
-      "#btn-favorite"
-    ) as HTMLButtonElement;
+    // Guardar en el local storage
+    let favoritePokemon: FavoritePokemon[] = JSON.parse(localStorage.getItem("favoritePokemon") || "[]");
+    const btnFavorite = document.querySelector("#btn-favorite") as HTMLButtonElement;
 
     if (!btnFavorite) return;
-    const name = btnFavorite.getAttribute("data-name");
-    const id = btnFavorite.getAttribute("data-id");
+
+    // Listado de elementos tomados del html
+    const name = btnFavorite.getAttribute("data-name") as string;
+    const id = btnFavorite.getAttribute("data-id") as string;
+    const heartOutline = btnFavorite.querySelector("[data-outline]") as HTMLElement;
+    const heartFull = btnFavorite.querySelector("[data-full]") as HTMLElement;
+
+
+    // Revisar si se encuentra en el local storage
+
+    const isFavorite  = () => {
+      const isFavorite = favoritePokemon.filter((pokemon) => pokemon.name === name);
+      if (isFavorite.length > 0) {
+        heartFull.classList.remove("hidden");
+        heartOutline.classList.add("hidden");
+      }
+
+    }
+
+    isFavorite();
+
+    // Revisar si se encuentra en los favoritos
+    const toggleFavorite = () => {
+      const isFavorite = favoritePokemon.some(
+        (pokemon) => pokemon.name === name
+      );
+
+      if (isFavorite) {
+        favoritePokemon = favoritePokemon.filter((pokemon) => pokemon.name !== name);
+      } else {
+        favoritePokemon.push({ name, id: +id });
+      }
+
+      localStorage.setItem("favoritePokemon", JSON.stringify(favoritePokemon));
+
+    };
 
     btnFavorite.addEventListener("click", () => {
-      console.log(name, id);
+      heartOutline.classList.toggle("hidden");
+      heartFull.classList.toggle("hidden");
+      toggleFavorite();
+      
     });
   };
 
